@@ -48,7 +48,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
 		if (!primaryEmail) {
 			return new Response('No verified primary email found.', { status: 400 });
 		}
-		user = await createUser(githubUserId, primaryEmail, username);
+		user = await createUser(githubUserId, username, primaryEmail);
 	}
 
 	const sessionToken = generateSessionToken();
