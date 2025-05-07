@@ -36,9 +36,9 @@ export async function GET(event: RequestEvent): Promise<Response> {
 			Authorization: `Bearer ${githubAccessToken}`
 		}
 	});
-	const { id: githubUserId, login: username } = await userResponse.json();
+	const { id: githubId, login: username } = await userResponse.json();
 
-	let user = await getUserFromGithubId(githubUserId);
+	let user = await getUserFromGithubId(githubId);
 	if (!user) {
 		const emailResponse = await fetch('https://api.github.com/user/emails', {
 			headers: { Authorization: `Bearer ${githubAccessToken}` }
@@ -48,7 +48,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
 		if (!primaryEmail) {
 			return new Response('No verified primary email found.', { status: 400 });
 		}
-		user = await createUser(githubUserId, username, primaryEmail);
+		user = await createUser({ githubId, username, email: primaryEmail });
 	}
 
 	const sessionToken = generateSessionToken();
