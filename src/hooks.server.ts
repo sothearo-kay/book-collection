@@ -1,7 +1,14 @@
 import type { Handle } from '@sveltejs/kit';
 import * as auth from '$lib/server/session.js';
 
-const handleAuth: Handle = async ({ event, resolve }) => {
+export const handle: Handle = async ({ event, resolve }) => {
+	// Suppress requests to /.well-known/appspecific/com.chrome.devtools.json
+	// https://github.com/sveltejs/kit/issues/13743
+	if (event.url.pathname.startsWith('/.well-known/appspecific/com.chrome.devtools.json')) {
+		return new Response(null, { status: 204 }); // No Content
+	}
+
+	// Authentication logic
 	const sessionToken = event.cookies.get(auth.sessionCookieName);
 
 	if (!sessionToken) {
@@ -22,5 +29,3 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 	event.locals.session = session;
 	return resolve(event);
 };
-
-export const handle: Handle = handleAuth;

@@ -31,7 +31,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
 	}
 
 	const githubAccessToken = tokens.accessToken();
-	const userResponse = await fetch('https//api.github.com/user', {
+	const userResponse = await fetch('https://api.github.com/user', {
 		headers: {
 			Authorization: `Bearer ${githubAccessToken}`
 		}
@@ -40,7 +40,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
 
 	let user = await getUserFromGithubId(githubUserId);
 	if (!user) {
-		const emailResponse = await fetch('https//api.github.com/user/emails', {
+		const emailResponse = await fetch('https://api.github.com/user/emails', {
 			headers: { Authorization: `Bearer ${githubAccessToken}` }
 		});
 		const emails: GitHubEmail[] = await emailResponse.json();
