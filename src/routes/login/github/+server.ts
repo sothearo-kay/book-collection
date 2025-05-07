@@ -1,8 +1,8 @@
 import { github } from '$lib/server/oauth';
 import { generateState } from 'arctic';
-import type { RequestEvent } from './$types';
+import type { RequestHandler } from './$types';
 
-export function GET(event: RequestEvent): Response {
+export const GET: RequestHandler = (event): Response => {
 	const state = generateState();
 	const url = github.createAuthorizationURL(state, ['user:email']);
 
@@ -20,4 +20,4 @@ export function GET(event: RequestEvent): Response {
 			Location: url.toString()
 		}
 	});
-}
+};

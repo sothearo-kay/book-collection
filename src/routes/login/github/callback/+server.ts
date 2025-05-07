@@ -1,7 +1,7 @@
 import { github } from '$lib/server/oauth';
 import { createUser, getUserFromGithubId } from '$lib/server/user';
 import { createSession, generateSessionToken, setSessionTokenCookie } from '$lib/server/session';
-import type { RequestEvent } from './$types';
+import type { RequestHandler } from './$types';
 import type { OAuth2Tokens } from 'arctic';
 
 interface GitHubEmail {
@@ -11,7 +11,7 @@ interface GitHubEmail {
 	visibility: 'public' | 'private' | null;
 }
 
-export async function GET(event: RequestEvent): Promise<Response> {
+export const GET: RequestHandler = async (event): Promise<Response> => {
 	const url = new URL(event.request.url);
 	const code = url.searchParams.get('code');
 	const state = url.searchParams.get('state');
@@ -61,4 +61,4 @@ export async function GET(event: RequestEvent): Promise<Response> {
 			Location: '/'
 		}
 	});
-}
+};

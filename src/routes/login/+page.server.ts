@@ -1,14 +1,15 @@
-import { redirect, fail, type RequestEvent } from '@sveltejs/kit';
+import { redirect, fail } from '@sveltejs/kit';
 import { getUserByEmail, createUser } from '$lib/server/user';
 import { generateSessionToken, createSession, setSessionTokenCookie } from '$lib/server/session';
 import { verifyPassword } from '$lib/server/crypto.js';
+import type { PageServerLoad, Actions } from './$types';
 
-export async function load(event: RequestEvent) {
+export const load: PageServerLoad = (event) => {
 	if (event.locals.session && event.locals.user) {
 		throw redirect(302, '/');
 	}
 	return {};
-}
+};
 
 export const actions = {
 	signin: async (event) => {
@@ -51,4 +52,4 @@ export const actions = {
 		setSessionTokenCookie(event, token, session.expiresAt);
 		throw redirect(303, '/');
 	}
-};
+} satisfies Actions;
