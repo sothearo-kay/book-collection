@@ -20,13 +20,13 @@ export const actions = {
 		// Retrieve user by email
 		const user = await getUserByEmail(email);
 		if (!user || !user.passwordHash) {
-			return fail(401, { error: 'Invalid credentials' });
+			return fail(401, { error: 'The email or password you entered is incorrect.' });
 		}
 
 		// Verify password
 		const isValid = await verifyPassword(password, user.passwordHash);
 		if (!isValid) {
-			return fail(401, { error: 'Invalid credentials' });
+			return fail(401, { error: 'The email or password you entered is incorrect.' });
 		}
 
 		const token = generateSessionToken();
