@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { fly } from 'svelte/transition';
 	import { enhance } from '$app/forms';
+	import { fly } from 'svelte/transition';
+	import { cubicOut } from 'svelte/easing';
 	import { Mail, SquareUser, BadgeX } from '@lucide/svelte';
 	import InputField from '../../components/ui/inputField.svelte';
 	import Password from '../../components/ui/password.svelte';
@@ -18,6 +19,15 @@
 		return async ({ update }) => {
 			await update();
 			loading = false;
+		};
+	};
+
+	const heightTransition = (node: HTMLElement, { duration = 300 } = {}) => {
+		const height = node.offsetHeight;
+		return {
+			duration,
+			easing: cubicOut,
+			css: (t: number) => `height: ${t * height}px; overflow: hidden;`
 		};
 	};
 </script>
@@ -52,11 +62,15 @@
 					</p>
 				</div>
 
-				{#if mode === 'login'}
-					{@render loginForm()}
-				{:else}
-					{@render registerForm()}
-				{/if}
+				{#key mode}
+					<div transition:heightTransition>
+						{#if mode === 'login'}
+							{@render loginForm()}
+						{:else}
+							{@render registerForm()}
+						{/if}
+					</div>
+				{/key}
 
 				<Divider text="Or" position="center" />
 
