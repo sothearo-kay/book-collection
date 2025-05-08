@@ -1,16 +1,19 @@
 <script lang="ts">
+	import { Loader } from '@lucide/svelte';
 	import type { Snippet } from 'svelte';
 	import type { HTMLButtonAttributes } from 'svelte/elements';
 
 	interface Props extends HTMLButtonAttributes {
 		variant?: 'default' | 'outline' | 'link';
 		fluid?: boolean;
+		loading?: boolean;
 		children: Snippet;
 	}
 
 	const {
 		variant = 'default',
 		fluid,
+		loading,
 		children,
 		class: buttonClass,
 		...buttonProps
@@ -26,11 +29,14 @@
 <button
 	{...buttonProps}
 	class={[
-		'inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-colors',
+		'relative inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-colors',
 		variants[variant],
 		buttonClass,
 		fluid && 'w-full'
 	]}
 >
 	{@render children()}
+	{#if loading}
+		<Loader class="animate-slow-spin absolute right-2 h-5 w-5" />
+	{/if}
 </button>

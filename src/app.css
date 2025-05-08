@@ -14,3 +14,7 @@
 		cursor: pointer;
 	}
 }
+
+@theme {
+	--animate-slow-spin: spin 2s linear infinite;
+}
