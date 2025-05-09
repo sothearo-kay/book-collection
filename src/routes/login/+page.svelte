@@ -51,7 +51,7 @@
 
 <main class="grid h-screen gap-4 p-4 max-md:h-auto md:grid-cols-2">
 	<div class="flex flex-col items-center justify-center gap-y-4 rounded-2xl lg:border lg:shadow-xs">
-		<div class="w-full space-y-4 md:max-w-md">
+		<div class="relative w-full max-md:space-y-4 md:max-w-md">
 			<div class="rounded-xl border p-6 shadow-xs">
 				<div class="my-6 text-center">
 					<h1 class="font-semibold">{mode === 'login' ? 'Sign in' : 'Sign up'} to Account</h1>
@@ -94,6 +94,7 @@
 					in:fly={{ y: -10 }}
 					class={[
 						'flex items-center gap-x-3 rounded-lg border px-4 py-2',
+						'md:absolute md:inset-x-0 md:-bottom-4 md:translate-y-full',
 						'border-red-300 bg-red-100 text-red-800'
 					]}
 				>
