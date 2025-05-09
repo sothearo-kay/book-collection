@@ -31,7 +31,7 @@
 			{#if isVisible}
 				<EyeOff class="h-5 w-5" />
 			{:else}
-				<Eye class="w-5 w-5" />
+				<Eye class="h-5 w-5" />
 			{/if}
 		</button>
 	</div>
