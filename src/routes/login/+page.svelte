@@ -64,11 +64,7 @@
 
 				{#key mode}
 					<div transition:heightTransition>
-						{#if mode === 'login'}
-							{@render loginForm()}
-						{:else}
-							{@render registerForm()}
-						{/if}
+						{@render (mode === 'login' ? loginForm : registerForm)()}
 					</div>
 				{/key}
 
