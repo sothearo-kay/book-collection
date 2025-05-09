@@ -6,7 +6,7 @@ import type { PageServerLoad, Actions } from './$types';
 
 export const load: PageServerLoad = (event) => {
 	if (event.locals.session && event.locals.user) {
-		throw redirect(302, '/');
+		throw redirect(302, '/dashboard');
 	}
 	return {};
 };
@@ -50,6 +50,6 @@ export const actions = {
 		const token = generateSessionToken();
 		const session = await createSession(token, newUser.id);
 		setSessionTokenCookie(event, token, session.expiresAt);
-		throw redirect(303, '/');
+		throw redirect(303, '/dashboard');
 	}
 } satisfies Actions;

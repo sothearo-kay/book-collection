@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import type { PageProps } from './$types';
+	import type { LayoutProps } from './$types';
 
-	let { data }: PageProps = $props();
+	let { data, children }: LayoutProps = $props();
 
 	const avatarUrl = data.user.githubId
 		? `https://avatars.githubusercontent.com/u/${data.user.githubId}`
@@ -13,6 +13,8 @@
 <img src={avatarUrl} height="100px" width="100px" alt="profile" />
 <p>Email: {data.user.email}</p>
 
-<form method="post" use:enhance>
+<form method="post" action="/dashboard" use:enhance>
 	<button>Sign out</button>
 </form>
+
+{@render children()}

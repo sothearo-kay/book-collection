@@ -58,7 +58,7 @@ export const GET: RequestHandler = async (event): Promise<Response> => {
 	return new Response(null, {
 		status: 302,
 		headers: {
-			Location: '/'
+			Location: '/dashboard'
 		}
 	});
 };
