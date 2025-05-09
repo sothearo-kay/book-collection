@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import Popover from '../../components/ui/popover.svelte';
+	import Avatar from '../../components/ui/avatar.svelte';
 	import type { LayoutProps } from './$types';
 
 	let { data, children }: LayoutProps = $props();
@@ -9,9 +11,20 @@
 		: `https://api.dicebear.com/9.x/identicon/svg?seed=${encodeURIComponent(data.user.username)}`;
 </script>
 
-<h1>Hi, {data.user.username}!</h1>
-<img src={avatarUrl} height="100px" width="100px" alt="profile" />
-<p>Email: {data.user.email}</p>
+<header class="sticky top-0 border-b bg-white">
+	<div class="container flex items-center py-2">
+		<div class="flex-1"></div>
+		<Popover contentClass="origin-top-right">
+			{#snippet trigger()}
+				<Avatar size={42} src={avatarUrl} alt="User's Profile" />
+			{/snippet}
+
+			{#snippet content()}
+				<h1>kon papa</h1>
+			{/snippet}
+		</Popover>
+	</div>
+</header>
 
 <form method="post" action="/dashboard" use:enhance>
 	<button>Sign out</button>

@@ -15,6 +15,11 @@
 	}
 }
 
+@utility container {
+	margin-inline: auto;
+	padding-inline: 1rem;
+}
+
 @theme {
 	--animate-slow-spin: spin 2s linear infinite;
 }
