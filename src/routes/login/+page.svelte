@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tick } from 'svelte';
 	import { enhance } from '$app/forms';
 	import { fly } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
@@ -13,6 +14,15 @@
 	let mode = $state<'login' | 'register'>('login');
 	let loading = $state<boolean>(false);
 	let navigating = $state<boolean>(false);
+	let errorEl: HTMLDivElement;
+
+	$effect(() => {
+		if (form?.error && errorEl) {
+			tick().then(() => {
+				errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			});
+		}
+	});
 
 	const loadingEnhance: SubmitFunction = () => {
 		loading = true;
@@ -87,6 +97,7 @@
 
 			{#if form?.error}
 				<div
+					bind:this={errorEl}
 					in:fly={{ y: -10 }}
 					class={[
 						'flex items-center gap-x-3 rounded-lg border px-4 py-2',
