@@ -29,14 +29,16 @@
 <button
 	{...buttonProps}
 	class={[
-		'relative inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-colors',
+		'inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium',
+		'transition-colors disabled:cursor-not-allowed',
 		variants[variant],
 		buttonClass,
 		fluid && 'w-full'
 	]}
 >
-	{@render children()}
 	{#if loading}
-		<Loader class="animate-slow-spin absolute right-2 h-5 w-5" />
+		<Loader class="animate-slow-spin h-5 w-5" />
+	{:else}
+		{@render children()}
 	{/if}
 </button>

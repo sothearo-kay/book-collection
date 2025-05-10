@@ -21,7 +21,7 @@
 			{id}
 			{...inputProps}
 			type={inputType}
-			class="w-full rounded-lg border py-1.5 pr-4 pl-10"
+			class="w-full rounded-lg border py-2 pr-4 pl-10 text-sm"
 		/>
 		<button
 			type="button"
