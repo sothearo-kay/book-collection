@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { tick } from 'svelte';
 	import { enhance } from '$app/forms';
 	import { fly } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
@@ -14,13 +13,11 @@
 	let mode = $state<'login' | 'register'>('login');
 	let loading = $state<boolean>(false);
 	let navigating = $state<boolean>(false);
-	let errorEl: HTMLDivElement;
+	let errorEl = $state<HTMLDivElement>();
 
 	$effect(() => {
 		if (form?.error && errorEl) {
-			tick().then(() => {
-				errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-			});
+			errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
 		}
 	});
 
@@ -63,7 +60,7 @@
 	<div class="flex flex-col items-center justify-center gap-y-4 rounded-2xl lg:border lg:shadow-xs">
 		<div class="relative w-full max-md:space-y-4 md:max-w-md">
 			<div class="rounded-xl border p-6 shadow-xs">
-				<div class="my-6 text-center">
+				<div class="my-4 text-center">
 					<h1 class="font-semibold">{mode === 'login' ? 'Sign in' : 'Sign up'} to Account</h1>
 					<p class="mt-1 text-sm text-neutral-500">
 						{mode === 'login'

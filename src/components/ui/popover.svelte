@@ -10,8 +10,7 @@
 	}
 
 	let { open = $bindable(false), trigger, content, contentClass }: Props = $props();
-	let triggerEl: HTMLButtonElement;
-	let popoverEl: HTMLDivElement;
+	let popoverEl = $state<HTMLDivElement>();
 
 	onMount(() => {
 		document.addEventListener('click', handleClickOutside);
@@ -25,18 +24,14 @@
 	};
 
 	const handleClickOutside = (event: MouseEvent) => {
-		if (
-			open &&
-			!triggerEl.contains(event.target as Node) &&
-			!popoverEl.contains(event.target as Node)
-		) {
+		if (open && !popoverEl!.contains(event.target as Node)) {
 			open = false;
 		}
 	};
 </script>
 
 <div class="relative inline-flex">
-	<button bind:this={triggerEl} onclick={toggle}>
+	<button onclick={toggle}>
 		{@render trigger?.()}
 	</button>
 
