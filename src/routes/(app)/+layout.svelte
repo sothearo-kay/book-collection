@@ -6,12 +6,11 @@
 	import Button from '../../components/ui/button.svelte';
 	import Divider from '../../components/ui/divider.svelte';
 	import SelectButton from '../../components/ui/selectButton.svelte';
+	import { applyTheme } from '$lib/utils/theme';
+	import { theme, type Theme } from '$lib/stores/theme.svelte';
 	import type { LayoutProps } from './$types';
 
-	type Theme = 'light' | 'dark' | 'system';
-
 	let { data, children }: LayoutProps = $props();
-	let currentTheme = $state<Theme>('system');
 
 	const avatarUrl = data.user.githubId
 		? `https://avatars.githubusercontent.com/u/${data.user.githubId}`
@@ -31,32 +30,6 @@
 
 		applyTheme(mode);
 	});
-
-	const applyTheme = (theme: Theme) => {
-		let actual: 'light' | 'dark';
-
-		if (theme === 'system') {
-			// detect OS setting in real time
-			actual = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-
-			// clear persisted choice
-			localStorage.removeItem('theme');
-			document.cookie = `theme=; max-age=0; path=/; SameSite=Lax`;
-		} else {
-			actual = theme;
-			// store the user’s explicit choice
-			localStorage.setItem('theme', theme);
-			const oneYear = 60 * 60 * 24 * 365;
-			document.cookie = `theme=${theme}; max-age=${oneYear}; path=/; SameSite=Lax`;
-		}
-
-		document.documentElement.setAttribute('data-theme', actual);
-		currentTheme = theme;
-	};
-
-	const handleThemeChange = (theme: Theme) => {
-		applyTheme(theme);
-	};
 </script>
 
 <header class="sticky top-0">
@@ -68,26 +41,26 @@
 			{/snippet}
 
 			{#snippet content()}
-				<div class="px-4 py-2">
-					<div class="mt-2 flex gap-x-2">
+				<div class="p-4">
+					<div class="flex gap-x-2">
 						<Avatar size={42} src={avatarUrl} alt="User's Profile" class="shrink-0" />
 						<div>
 							<p class="text-base font-bold">{data.user.username}</p>
 							<p class="text-sm text-neutral-500">{data.user.email}</p>
 						</div>
 					</div>
-					<Divider size="sm" />
+					<Divider size="md" />
 					<SelectButton
-						value={currentTheme}
+						value={theme.value}
 						options={themeOptions}
-						onChange={(theme) => handleThemeChange(theme)}
+						onChange={(theme) => applyTheme(theme)}
 						class="mx-1"
 					/>
-					<Divider size="sm" />
+					<Divider size="md" />
 					<form method="post" action="/dashboard" use:enhance>
 						<Button variant="ghost" position="start" rounded="md" fluid>
-							<LogOut class="h-5 w-5 rotate-180" />
-							Log Out
+							<LogOut class="h-5 w-5" />
+							Log out
 						</Button>
 					</form>
 				</div>

@@ -7,19 +7,14 @@
 	import Password from '../../components/ui/password.svelte';
 	import Button from '../../components/ui/button.svelte';
 	import Divider from '../../components/ui/divider.svelte';
+	import { theme } from '$lib/stores/theme.svelte';
 	import type { PageProps, SubmitFunction } from './$types';
-	import { onMount } from 'svelte';
 
 	let { form }: PageProps = $props();
 	let mode = $state<'login' | 'register'>('login');
 	let loading = $state<boolean>(false);
 	let navigating = $state<boolean>(false);
 	let errorEl = $state<HTMLDivElement>();
-	let theme = $state();
-
-	onMount(() => {
-		theme = document.documentElement.getAttribute('data-theme') || 'light';
-	});
 
 	$effect(() => {
 		if (form?.error && errorEl) {
@@ -91,7 +86,7 @@
 				<a href="/login/github" onclick={() => (navigating = true)}>
 					<Button disabled={navigating} variant="outline" loading={navigating} fluid class="gap-2">
 						<img
-							src={theme === 'dark' ? '/github_light.svg' : '/github_dark.svg'}
+							src={theme.value === 'dark' ? '/github_light.svg' : '/github_dark.svg'}
 							alt="GitHub logo"
 							class="h-5 w-5"
 						/>
