@@ -85,9 +85,9 @@
 				</a>
 
 				<div class="mt-4 flex justify-center gap-1">
-					<p>{mode === 'login' ? 'Need an Account?' : 'Have an account?'}</p>
+					<p>{mode === 'login' ? "Don't have an account?" : 'Have an account?'}</p>
 					<Button variant="link" onclick={() => (mode = mode === 'login' ? 'register' : 'login')}>
-						{mode === 'login' ? 'Register' : 'Log in'}
+						{mode === 'login' ? 'Sign up' : 'Sign in'}
 					</Button>
 				</div>
 			</div>
