@@ -59,7 +59,7 @@
 	};
 </script>
 
-<header class="sticky top-0 bg-white">
+<header class="sticky top-0">
 	<div class="container flex items-center py-2">
 		<div class="flex-1"></div>
 		<Popover contentClass="origin-top-right min-w-[280px]">
@@ -73,7 +73,7 @@
 						<Avatar size={42} src={avatarUrl} alt="User's Profile" class="shrink-0" />
 						<div>
 							<p class="text-base font-bold">{data.user.username}</p>
-							<p class="text-sm text-neutral-600">{data.user.email}</p>
+							<p class="text-sm text-neutral-500">{data.user.email}</p>
 						</div>
 					</div>
 					<Divider size="sm" />

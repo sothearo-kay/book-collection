@@ -2,13 +2,44 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
-@theme @layer base {
+@theme {
+	/* Shared Colors */
+	--color-primary: #5b6ef6; /* Soft blue */
+	--color-accent: #7e57c2; /* Light purple */
+	--color-success: #34d399; /* Green success */
+	--color-info: #60a5fa; /* Info blue */
+	--color-warning: #fbbf24; /* Amber */
+	--color-danger: #f87171; /* Light red */
+
+	/* Light Theme */
+	--color-bg: #f5f5f5;
+	--color-bg-secondary: #ffffff;
+	--color-card-bg: #f4f4f5;
+	--color-text: #111827;
+	--color-text-secondary: #6b7280;
+	--color-border: #e5e7eb;
+
+	/* Dark Theme */
+	--color-bg-dark: #0e0f11;
+	--color-bg-secondary-dark: #131313;
+	--color-card-bg-dark: #202020;
+	--color-text-dark: #f9fafb;
+	--color-text-secondary-dark: #9ca3af;
+	--color-border-dark: #fff2;
+}
+
+@layer base {
 	*,
 	::after,
 	::before,
 	::backdrop,
 	::file-selector-button {
-		border-color: var(--color-neutral-200, currentColor);
+		border-color: var(--color-border, currentColor);
+	}
+
+	[data-theme='dark'] &,
+	[data-theme='dark'] * {
+		border-color: var(--color-border-dark);
 	}
 
 	button:not(:disabled),

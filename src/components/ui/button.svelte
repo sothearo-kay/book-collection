@@ -26,10 +26,29 @@
 	}: Props = $props();
 
 	const variants = {
-		default: 'border border-transparent bg-black text-white hover:bg-neutral-800',
-		outline: 'border text-black hover:bg-neutral-100',
-		ghost: 'border border-transparent text-neutral-600 hover:bg-neutral-100',
-		link: 'text-base! p-0! text-blue-600 underline-offset-3 hover:underline'
+		default: `
+		border border-transparent 
+		bg-black text-white 
+		hover:bg-neutral-800 
+		dark:bg-white dark:text-black 
+		dark:hover:bg-neutral-200
+	`,
+		outline: `
+		border text-text dark:text-text-dark 
+		hover:bg-neutral-100 
+		dark:hover:bg-[#1e1e1e]
+	`,
+		ghost: `
+		border border-transparent text-neutral-600 
+		hover:bg-neutral-100 
+		dark:text-neutral-300 
+		dark:hover:bg-[#1e1e1e]
+	`,
+		link: `
+		text-base! p-0! 
+		text-blue-600 dark:text-blue-400 
+		underline-offset-3 hover:underline
+	`
 	};
 
 	const justifyVariants = {

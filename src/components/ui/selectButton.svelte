@@ -48,10 +48,14 @@
 	};
 </script>
 
-<div bind:this={containerEl} class={`relative flex rounded-lg bg-neutral-100 ${className}`}>
+<div
+	bind:this={containerEl}
+	class={['relative flex rounded-lg', 'bg-card-bg dark:bg-card-bg-dark', className]}
+>
 	<div
 		class={[
-			'absolute inset-y-0 z-0 mb-px rounded-md border bg-white shadow-sm',
+			'absolute inset-y-0 z-0 rounded-md border shadow-sm',
+			'bg-bg-secondary dark:bg-bg-secondary-dark',
 			mounted && 'transition-transform duration-300'
 		]}
 		style={styleToString(bgStyle)}
@@ -63,9 +67,9 @@
 			variant="ghost"
 			onclick={() => setOptionValue(option.value)}
 			class={[
-				'relative z-10 flex-1 hover:bg-transparent',
+				'relative z-10 flex-1 hover:bg-transparent dark:hover:bg-transparent',
 				option.class,
-				activeIndex === i && '!text-indigo-600'
+				activeIndex === i && '!text-indigo-600 dark:!text-indigo-400'
 			]}
 		>
 			<option.Icon class="h-5 w-5" />

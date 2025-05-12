@@ -8,12 +8,18 @@
 	import Button from '../../components/ui/button.svelte';
 	import Divider from '../../components/ui/divider.svelte';
 	import type { PageProps, SubmitFunction } from './$types';
+	import { onMount } from 'svelte';
 
 	let { form }: PageProps = $props();
 	let mode = $state<'login' | 'register'>('login');
 	let loading = $state<boolean>(false);
 	let navigating = $state<boolean>(false);
 	let errorEl = $state<HTMLDivElement>();
+	let theme = $state();
+
+	onMount(() => {
+		theme = document.documentElement.getAttribute('data-theme') || 'light';
+	});
 
 	$effect(() => {
 		if (form?.error && errorEl) {
@@ -57,9 +63,14 @@
 {/snippet}
 
 <main class="grid h-screen gap-4 p-4 max-md:h-auto md:grid-cols-2">
-	<div class="flex flex-col items-center justify-center gap-y-4 rounded-2xl lg:border lg:shadow-xs">
+	<div
+		class={[
+			'flex flex-col items-center justify-center gap-y-4 rounded-2xl',
+			'bg-bg-secondary dark:bg-bg-secondary-dark lg:border lg:shadow-xs'
+		]}
+	>
 		<div class="relative w-full max-md:space-y-4 md:max-w-md">
-			<div class="rounded-xl border p-6 shadow-xs">
+			<div class={['rounded-xl border p-6 shadow-xs']}>
 				<div class="my-4 text-center">
 					<h1 class="font-semibold">{mode === 'login' ? 'Sign in' : 'Sign up'} to Account</h1>
 					<p class="mt-1 text-sm text-neutral-500">
@@ -79,7 +90,11 @@
 
 				<a href="/login/github" onclick={() => (navigating = true)}>
 					<Button disabled={navigating} variant="outline" loading={navigating} fluid class="gap-2">
-						<img src="/github.svg" alt="Github's logo" class="h-5 w-5" />
+						<img
+							src={theme === 'dark' ? '/github_light.svg' : '/github_dark.svg'}
+							alt="GitHub logo"
+							class="h-5 w-5"
+						/>
 						Sign in with GitHub
 					</Button>
 				</a>
