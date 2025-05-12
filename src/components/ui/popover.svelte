@@ -9,7 +9,7 @@
 		contentClass?: string;
 	}
 
-	let { open = $bindable(false), trigger, content, contentClass }: Props = $props();
+	let { open = $bindable(false), trigger, content, contentClass = '' }: Props = $props();
 	let popoverEl = $state<HTMLDivElement>();
 	let triggerEl: HTMLButtonElement;
 
@@ -46,7 +46,7 @@
 			in:scale={{ duration: 300 }}
 			out:fade={{ duration: 150 }}
 			class={[
-				'absolute right-0 -bottom-2 min-w-max translate-y-full rounded-lg border bg-white shadow-sm',
+				'absolute right-0 -bottom-2 translate-y-full rounded-lg border bg-white shadow-sm',
 				contentClass
 			]}
 		>

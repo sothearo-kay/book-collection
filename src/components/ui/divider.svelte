@@ -2,11 +2,16 @@
 	interface Props {
 		text: string;
 		position: 'start' | 'center' | 'end';
-		size: 'md' | 'lg';
+		size: 'sm' | 'md' | 'lg';
 		class: string;
 	}
 
-	const { text, position = 'center', size = 'lg', class: userClass }: Partial<Props> = $props();
+	const {
+		text,
+		position = 'center',
+		size = 'lg',
+		class: userClass = ''
+	}: Partial<Props> = $props();
 
 	const hrFlexByTextPosition = {
 		start: ['flex-none', 'flex-grow'],
@@ -25,7 +30,8 @@
 	const textMargin = textMarginMap[position];
 
 	const sizeMap = {
-		md: 'my-3',
+		sm: 'my-2',
+		md: 'my-4',
 		lg: 'my-6'
 	};
 
