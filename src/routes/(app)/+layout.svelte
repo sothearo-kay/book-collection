@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { LogOut, Moon, Sun, Monitor, Component } from '@lucide/svelte';
+	import { LogOut } from '@lucide/svelte';
 	import Popover from '../../components/ui/popover.svelte';
 	import Avatar from '../../components/ui/avatar.svelte';
 	import Button from '../../components/ui/button.svelte';
 	import Divider from '../../components/ui/divider.svelte';
 	import SelectButton from '../../components/ui/selectButton.svelte';
 	import { applyTheme } from '$lib/utils/theme';
-	import { theme, type Theme } from '$lib/stores/theme.svelte';
+	import { theme, themeOptions } from '$lib/stores/theme.svelte';
 	import type { LayoutProps } from './$types';
 
 	let { data, children }: LayoutProps = $props();
@@ -15,12 +15,6 @@
 	const avatarUrl = data.user.githubId
 		? `https://avatars.githubusercontent.com/u/${data.user.githubId}`
 		: `https://api.dicebear.com/9.x/identicon/svg?seed=${encodeURIComponent(data.user.username)}`;
-
-	const themeOptions: { value: Theme; Icon: typeof Component }[] = [
-		{ value: 'light', Icon: Sun },
-		{ value: 'dark', Icon: Moon },
-		{ value: 'system', Icon: Monitor }
-	];
 </script>
 
 <header class="sticky top-0">

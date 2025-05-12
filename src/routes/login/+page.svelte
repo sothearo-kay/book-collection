@@ -7,7 +7,8 @@
 	import Password from '../../components/ui/password.svelte';
 	import Button from '../../components/ui/button.svelte';
 	import Divider from '../../components/ui/divider.svelte';
-	import { theme } from '$lib/stores/theme.svelte';
+	import { applyTheme } from '$lib/utils/theme';
+	import { theme, actualTheme, themeOptions } from '$lib/stores/theme.svelte';
 	import type { PageProps, SubmitFunction } from './$types';
 
 	let { form }: PageProps = $props();
@@ -15,6 +16,9 @@
 	let loading = $state<boolean>(false);
 	let navigating = $state<boolean>(false);
 	let errorEl = $state<HTMLDivElement>();
+
+	let currentIndex = $state(themeOptions.findIndex((t) => t.value === theme.value));
+	let ThemeIcon = $derived(themeOptions[currentIndex].Icon);
 
 	$effect(() => {
 		if (form?.error && errorEl) {
@@ -38,6 +42,12 @@
 			css: (t: number) => `height: ${t * height}px; overflow: hidden;`
 		};
 	};
+
+	const toggleTheme = () => {
+		currentIndex = (currentIndex + 1) % themeOptions.length;
+		const next = themeOptions[currentIndex];
+		applyTheme(next.value);
+	};
 </script>
 
 {#snippet loginForm()}
@@ -60,10 +70,27 @@
 <main class="grid h-screen gap-4 p-4 max-md:h-auto md:grid-cols-2">
 	<div
 		class={[
-			'flex flex-col items-center justify-center gap-y-4 rounded-2xl',
+			'relative flex flex-col items-center justify-center gap-y-4 rounded-2xl',
 			'bg-bg-secondary dark:bg-bg-secondary-dark lg:border lg:shadow-xs'
 		]}
 	>
+		<Button
+			variant="outline"
+			aria-label="Toggle Theme"
+			class="absolute top-4 right-4 z-10 h-10 w-10 overflow-hidden max-sm:hidden"
+			onclick={toggleTheme}
+		>
+			{#key currentIndex}
+				<div
+					in:fly={{ y: -20, opacity: 0 }}
+					out:fly={{ y: 20, opacity: 0 }}
+					class="absolute flex items-center justify-center"
+				>
+					<ThemeIcon class="h-5 w-5" />
+				</div>
+			{/key}
+		</Button>
+
 		<div class="relative w-full max-md:space-y-4 md:max-w-md">
 			<div class={['rounded-xl border p-6 shadow-xs']}>
 				<div class="my-4 text-center">
@@ -86,7 +113,7 @@
 				<a href="/login/github" onclick={() => (navigating = true)}>
 					<Button disabled={navigating} variant="outline" loading={navigating} fluid class="gap-2">
 						<img
-							src={theme.value === 'dark' ? '/github_light.svg' : '/github_dark.svg'}
+							src={actualTheme.value === 'dark' ? '/github_light.svg' : '/github_dark.svg'}
 							alt="GitHub logo"
 							class="h-5 w-5"
 						/>

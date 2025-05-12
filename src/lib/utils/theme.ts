@@ -1,4 +1,4 @@
-import { theme, type Theme } from '$lib/stores/theme.svelte';
+import { theme, actualTheme, type Theme } from '$lib/stores/theme.svelte';
 
 export const applyTheme = (selectedTheme: Theme) => {
 	let actual: 'light' | 'dark';
@@ -20,4 +20,5 @@ export const applyTheme = (selectedTheme: Theme) => {
 
 	document.documentElement.setAttribute('data-theme', actual);
 	theme.value = selectedTheme;
+	actualTheme.value = actual;
 };
