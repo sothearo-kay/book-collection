@@ -11,12 +11,13 @@
 	};
 
 	interface Props {
-		value: T;
+		value?: T;
 		options: Option[];
 		class: string;
+		onChange?: (value: T) => void;
 	}
 
-	let { value = $bindable(), options, class: className = '' }: Props = $props();
+	let { value = $bindable(), options, class: className = '', onChange }: Props = $props();
 	let mounted = $state(false);
 	let containerEl: HTMLDivElement;
 	let optionEls = $state<HTMLButtonElement[]>([]);
@@ -41,6 +42,9 @@
 
 	const setOptionValue = (v: T) => {
 		value = v;
+		if (onChange) {
+			onChange(v);
+		}
 	};
 </script>
 
@@ -58,7 +62,11 @@
 			bind:use={optionEls[i]}
 			variant="ghost"
 			onclick={() => setOptionValue(option.value)}
-			class={['relative z-10 flex-1 hover:bg-transparent', option.class]}
+			class={[
+				'relative z-10 flex-1 hover:bg-transparent',
+				option.class,
+				activeIndex === i && '!text-indigo-600'
+			]}
 		>
 			<option.Icon class="h-5 w-5" />
 		</Button>

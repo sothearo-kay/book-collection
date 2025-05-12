@@ -8,29 +8,38 @@ export const handle: Handle = async ({ event, resolve }) => {
 		return new Response(null, { status: 204 }); // No Content
 	}
 
-	// Route Rules '/' -> '/dashboard'
+	// Redirect root → dashboard
 	if (event.url.pathname === '/') {
 		throw redirect(307, '/dashboard');
 	}
 
 	// Authentication logic
-	const sessionToken = event.cookies.get(auth.sessionCookieName);
+	const token = event.cookies.get(auth.sessionCookieName);
 
-	if (!sessionToken) {
+	if (!token) {
 		event.locals.user = null;
 		event.locals.session = null;
-		return resolve(event);
-	}
-
-	const { session, user } = await auth.validateSessionToken(sessionToken);
-
-	if (session) {
-		auth.setSessionTokenCookie(event, sessionToken, session.expiresAt);
 	} else {
-		auth.deleteSessionTokenCookie(event);
+		const { session, user } = await auth.validateSessionToken(token);
+		if (session) {
+			auth.setSessionTokenCookie(event, token, session.expiresAt);
+		} else {
+			auth.deleteSessionTokenCookie(event);
+		}
+		event.locals.user = user;
+		event.locals.session = session;
 	}
 
-	event.locals.user = user;
-	event.locals.session = session;
-	return resolve(event);
+	// Handle theme (for SSR)
+	const theme = event.cookies.get('theme');
+
+	if (!theme) {
+		return await resolve(event);
+	}
+
+	return await resolve(event, {
+		transformPageChunk: ({ html }) => {
+			return html.replace('data-theme=""', `data-theme="${theme}"`);
+		}
+	});
 };

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { LogOut, Moon, Sun, Monitor } from '@lucide/svelte';
+	import { LogOut, Moon, Sun, Monitor, Component } from '@lucide/svelte';
 	import Popover from '../../components/ui/popover.svelte';
 	import Avatar from '../../components/ui/avatar.svelte';
 	import Button from '../../components/ui/button.svelte';
@@ -8,18 +8,55 @@
 	import SelectButton from '../../components/ui/selectButton.svelte';
 	import type { LayoutProps } from './$types';
 
+	type Theme = 'light' | 'dark' | 'system';
+
 	let { data, children }: LayoutProps = $props();
-	let theme = $state<'light' | 'dark' | 'system'>('system');
+	let currentTheme = $state<Theme>('system');
 
 	const avatarUrl = data.user.githubId
 		? `https://avatars.githubusercontent.com/u/${data.user.githubId}`
 		: `https://api.dicebear.com/9.x/identicon/svg?seed=${encodeURIComponent(data.user.username)}`;
 
-	const themeOptions = [
+	const themeOptions: { value: Theme; Icon: typeof Component }[] = [
 		{ value: 'light', Icon: Sun },
 		{ value: 'dark', Icon: Moon },
 		{ value: 'system', Icon: Monitor }
 	];
+
+	$effect(() => {
+		if (typeof window === 'undefined') return;
+
+		const stored = localStorage.getItem('theme') as Theme | null;
+		const mode = stored === 'light' || stored === 'dark' ? stored : 'system';
+
+		applyTheme(mode);
+	});
+
+	const applyTheme = (theme: Theme) => {
+		let actual: 'light' | 'dark';
+
+		if (theme === 'system') {
+			// detect OS setting in real time
+			actual = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+			// clear persisted choice
+			localStorage.removeItem('theme');
+			document.cookie = `theme=; max-age=0; path=/; SameSite=Lax`;
+		} else {
+			actual = theme;
+			// store the user’s explicit choice
+			localStorage.setItem('theme', theme);
+			const oneYear = 60 * 60 * 24 * 365;
+			document.cookie = `theme=${theme}; max-age=${oneYear}; path=/; SameSite=Lax`;
+		}
+
+		document.documentElement.setAttribute('data-theme', actual);
+		currentTheme = theme;
+	};
+
+	const handleThemeChange = (theme: Theme) => {
+		applyTheme(theme);
+	};
 </script>
 
 <header class="sticky top-0 bg-white">
@@ -40,7 +77,12 @@
 						</div>
 					</div>
 					<Divider size="sm" />
-					<SelectButton bind:value={theme} options={themeOptions} class="mx-1" />
+					<SelectButton
+						value={currentTheme}
+						options={themeOptions}
+						onChange={(theme) => handleThemeChange(theme)}
+						class="mx-1"
+					/>
 					<Divider size="sm" />
 					<form method="post" action="/dashboard" use:enhance>
 						<Button variant="ghost" position="start" rounded="md" fluid>
