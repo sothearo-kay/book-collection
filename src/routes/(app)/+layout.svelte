@@ -21,15 +21,6 @@
 		{ value: 'dark', Icon: Moon },
 		{ value: 'system', Icon: Monitor }
 	];
-
-	$effect(() => {
-		if (typeof window === 'undefined') return;
-
-		const stored = localStorage.getItem('theme') as Theme | null;
-		const mode = stored === 'light' || stored === 'dark' ? stored : 'system';
-
-		applyTheme(mode);
-	});
 </script>
 
 <header class="sticky top-0">
