@@ -12,7 +12,7 @@
 	--color-danger: #f87171; /* Light red */
 
 	/* Light Theme */
-	--color-bg: #f4f4f5;
+	--color-bg: #fafafa;
 	--color-bg-secondary: #ffffff;
 	--color-card-bg: #f4f4f5;
 	--color-text: #111827;
@@ -25,7 +25,7 @@
 	/* Dark Theme */
 	--color-bg-dark: #111111;
 	--color-bg-secondary-dark: #18181b;
-	--color-card-bg-dark: #202020;
+	--color-card-bg-dark: #232323;
 	--color-text-dark: #f9fafb;
 	--color-text-secondary-dark: #9ca3af;
 	--color-border-dark: #fff3;

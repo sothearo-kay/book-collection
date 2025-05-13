@@ -14,13 +14,13 @@
 
 	const avatarUrl = data.user.githubId
 		? `https://avatars.githubusercontent.com/u/${data.user.githubId}`
-		: `https://api.dicebear.com/9.x/identicon/svg?seed=${encodeURIComponent(data.user.username)}`;
+		: `https://api.dicebear.com/9.x/thumbs/svg?seed=${encodeURIComponent(data.user.username)}`;
 </script>
 
 <header class="sticky top-0">
 	<div class="container flex items-center py-2">
 		<div class="flex-1"></div>
-		<Popover contentClass="origin-top-right min-w-[280px]">
+		<Popover contentClass="origin-top-right min-w-[295px] rounded-xl">
 			{#snippet trigger()}
 				<Avatar size={42} src={avatarUrl} alt="User's Profile" />
 			{/snippet}

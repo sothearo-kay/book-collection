@@ -36,13 +36,13 @@
 		outline: `
 		border text-text dark:text-text-dark 
 		hover:bg-neutral-100 
-		dark:hover:bg-[#1e1e1e]
+		dark:hover:bg-[#232323]
 	`,
 		ghost: `
 		border border-transparent text-neutral-600 
 		hover:bg-neutral-100 
 		dark:text-neutral-300 
-		dark:hover:bg-[#1e1e1e]
+		dark:hover:bg-[#232323]
 	`,
 		link: `
 		text-base! p-0! 

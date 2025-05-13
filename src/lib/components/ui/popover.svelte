@@ -46,7 +46,7 @@
 			in:scale={{ duration: 300 }}
 			out:fade={{ duration: 150 }}
 			class={[
-				'absolute right-0 -bottom-2 translate-y-full rounded-lg border shadow-sm',
+				'absolute right-0 -bottom-2 translate-y-full border shadow-xs',
 				'bg-bg-secondary dark:bg-bg-secondary-dark',
 				contentClass
 			]}
