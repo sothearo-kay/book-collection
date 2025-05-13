@@ -1,4 +1,4 @@
-import { redirect, type Handle } from '@sveltejs/kit';
+import { type Handle } from '@sveltejs/kit';
 import * as auth from '$lib/server/session.js';
 
 export const handle: Handle = async ({ event, resolve }) => {
@@ -6,11 +6,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 	// https://github.com/sveltejs/kit/issues/13743
 	if (event.url.pathname.startsWith('/.well-known/appspecific/com.chrome.devtools.json')) {
 		return new Response(null, { status: 204 }); // No Content
-	}
-
-	// Redirect root → dashboard
-	if (event.url.pathname === '/') {
-		throw redirect(307, '/dashboard');
 	}
 
 	// Authentication logic

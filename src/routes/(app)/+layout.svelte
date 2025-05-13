@@ -42,7 +42,7 @@
 						class="mx-1"
 					/>
 					<Divider size="md" />
-					<form method="post" action="/dashboard" use:enhance>
+					<form method="post" action="/" use:enhance>
 						<Button variant="ghost" position="start" rounded="md" fluid>
 							<LogOut class="h-5 w-5" />
 							Log out
