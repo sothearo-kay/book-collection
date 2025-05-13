@@ -18,6 +18,9 @@
 	--color-text: #111827;
 	--color-text-secondary: #6b7280;
 	--color-border: #e5e7eb;
+	--color-error-bg: #fee2e2;
+	--color-error-border: #fca5a5;
+	--color-error-text: #b91c1c;
 
 	/* Dark Theme */
 	--color-bg-dark: #111111;
@@ -25,7 +28,12 @@
 	--color-card-bg-dark: #202020;
 	--color-text-dark: #f9fafb;
 	--color-text-secondary-dark: #9ca3af;
-	--color-border-dark: #fff2;
+	--color-border-dark: #fff3;
+	--color-error-bg-dark: #3b1e1e;
+	--color-error-border-dark: #ef4444;
+	--color-error-text-dark: #fca5a5;
+
+	--animate-slow-spin: spin 2s linear infinite;
 }
 
 @layer base {
@@ -51,8 +59,4 @@
 @utility container {
 	margin-inline: auto;
 	padding-inline: 1rem;
-}
-
-@theme {
-	--animate-slow-spin: spin 2s linear infinite;
 }
