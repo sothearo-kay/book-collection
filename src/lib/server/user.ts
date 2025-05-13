@@ -1,17 +1,16 @@
 import { db } from './db';
 import { user as userTable, type User } from './db/schema';
 import { hashPassword } from './crypto';
-import { eq } from 'drizzle-orm';
+import { eq, type AnyColumn } from 'drizzle-orm';
 
-export async function getUserFromGithubId(githubId: number): Promise<User | null> {
-	const [existingUser] = await db.select().from(userTable).where(eq(userTable.githubId, githubId));
-	return existingUser ?? null;
+async function getUserByField<T>(field: AnyColumn, value: T): Promise<User | null> {
+	const [user] = await db.select().from(userTable).where(eq(field, value));
+	return user ?? null;
 }
 
-export async function getUserByEmail(email: string): Promise<User | null> {
-	const [existingUser] = await db.select().from(userTable).where(eq(userTable.email, email));
-	return existingUser ?? null;
-}
+// prettier-ignore
+export const getUserFromGithubId = (githubId: number) => getUserByField(userTable.githubId, githubId);
+export const getUserByEmail = (email: string) => getUserByField(userTable.email, email);
 
 export async function createUser({
 	githubId,
