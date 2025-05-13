@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { LogOut } from '@lucide/svelte';
-	import Popover from '../../components/ui/popover.svelte';
-	import Avatar from '../../components/ui/avatar.svelte';
-	import Button from '../../components/ui/button.svelte';
-	import Divider from '../../components/ui/divider.svelte';
-	import SelectButton from '../../components/ui/selectButton.svelte';
+	import Popover from '$lib/components/ui/popover.svelte';
+	import Avatar from '$lib/components/ui/avatar.svelte';
+	import Button from '$lib/components/ui/button.svelte';
+	import Divider from '$lib/components/ui/divider.svelte';
+	import SelectButton from '$lib/components/ui/selectButton.svelte';
 	import { applyTheme } from '$lib/utils/theme';
 	import { theme, themeOptions } from '$lib/stores/theme.svelte';
 	import type { LayoutProps } from './$types';

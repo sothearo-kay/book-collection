@@ -3,10 +3,10 @@
 	import { fly } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 	import { Mail, SquareUser, BadgeX } from '@lucide/svelte';
-	import InputField from '../../components/ui/inputField.svelte';
-	import Password from '../../components/ui/password.svelte';
-	import Button from '../../components/ui/button.svelte';
-	import Divider from '../../components/ui/divider.svelte';
+	import InputField from '$lib/components/ui/inputField.svelte';
+	import Password from '$lib/components/ui/password.svelte';
+	import Button from '$lib/components/ui/button.svelte';
+	import Divider from '$lib/components/ui/divider.svelte';
 	import { applyTheme } from '$lib/utils/theme';
 	import { theme, actualTheme, themeOptions } from '$lib/stores/theme.svelte';
 	import type { PageProps, SubmitFunction } from './$types';
